@@ -12,7 +12,6 @@ import ast
 from time import sleep
 from multiprocessing import Queue, Event, Process, Value, current_process
 import traceback
-import sys
 
 # external
 import arrow
@@ -381,7 +380,7 @@ def worker(task_queue, result_queue, timer, timeout=Conf.TIMEOUT):
                 res = f(*task['args'], **task['kwargs'])
                 result = (res, True)
             except Exception as e:
-                tb = traceback.format_exc().decode(sys.getfilesystemencoding())
+                tb = traceback.format_exc().decode('utf8')
                 result = (tb, False)
 
                 if rollbar:
