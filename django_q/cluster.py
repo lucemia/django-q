@@ -380,8 +380,8 @@ def worker(task_queue, result_queue, timer, timeout=Conf.TIMEOUT):
                 res = f(*task['args'], **task['kwargs'])
                 result = (res, True)
             except Exception as e:
-                tb = traceback.format_exc()
-                result = (u'{}'.format(tb), False)
+                tb = traceback.format_exc().decode(sys.getfilesystemencoding())
+                result = (tb, False)
 
                 if rollbar:
                     rollbar.report_exc_info()
